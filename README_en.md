@@ -30,21 +30,21 @@ Our design eschews heavyweight SDKs in favor of a pure API engine that integrate
 
 ```mermaid
 graph TD
-    Client[Client / Agent] -->|POST Message| API[FastAPI /sessions/*/messages]
-    API --> DB[(PostgreSQL)]
-    API -.->|Enqueue Task| TaskQueue[Background Task Queue]
+    Client["Client / Agent"] -->|"POST Message"| API["FastAPI /sessions/*/messages"]
+    API --> DB[("PostgreSQL")]
+    API -.->|"Enqueue Task"| TaskQueue["Background Task Queue"]
     
-    subgraph Async Worker Loop
-        TaskQueue --> Extractor[LLM Extractor]
-        Extractor -->|Generates| Obs[Observations]
-        Obs --> Matcher[Semantic Matcher]
-        Matcher -->|Merge / Resolve| Consolidator[Consolidator]
+    subgraph WorkerLoop ["Async Worker Loop"]
+        TaskQueue --> Extractor["LLM Extractor"]
+        Extractor -->|"Generates"| Obs["Observations"]
+        Obs --> Matcher["Semantic Matcher"]
+        Matcher -->|"Merge / Resolve"| Consolidator["Consolidator"]
     end
     
     Consolidator --> DB
-    Consolidator --> VectorDB[(Vector DB / Index)]
+    Consolidator --> VectorDB[("Vector DB / Index")]
     
-    Client -->|GET /memories| SearchAPI[FastAPI /memories]
+    Client -->|"GET /memories"| SearchAPI["FastAPI /memories"]
     SearchAPI --> VectorDB
 ```
 

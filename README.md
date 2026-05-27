@@ -30,21 +30,21 @@
 
 ```mermaid
 graph TD
-    Client[业务应用 / Agent] -->|POST 存入消息| API[FastAPI /sessions/*/messages]
-    API --> DB[(PostgreSQL)]
-    API -.->|派发异步任务| TaskQueue[后台任务队列]
+    Client["业务应用 / Agent"] -->|"POST 存入消息"| API["FastAPI /sessions/*/messages"]
+    API --> DB[("PostgreSQL")]
+    API -.->|"派发异步任务"| TaskQueue["后台任务队列"]
     
-    subgraph 异步工作流 (Worker Loop)
-        TaskQueue --> Extractor[LLM 提取器]
-        Extractor -->|生成初步记忆| Obs[Observation]
-        Obs --> Matcher[语义匹配器]
-        Matcher -->|冲突解决与合并| Consolidator[记忆整合器]
+    subgraph WorkerLoop ["异步工作流 (Worker Loop)"]
+        TaskQueue --> Extractor["LLM 提取器"]
+        Extractor -->|"生成初步记忆"| Obs["Observation"]
+        Obs --> Matcher["语义匹配器"]
+        Matcher -->|"冲突解决与合并"| Consolidator["记忆整合器"]
     end
     
     Consolidator --> DB
-    Consolidator --> VectorDB[(向量数据库 / 索引)]
+    Consolidator --> VectorDB[("向量数据库 / 索引")]
     
-    Client -->|GET 查询记忆| SearchAPI[FastAPI /memories]
+    Client -->|"GET 查询记忆"| SearchAPI["FastAPI /memories"]
     SearchAPI --> VectorDB
 ```
 
