@@ -1,4 +1,4 @@
-# 🧠 SynapseEngine (前 mini_memory_engine)
+# 🧠 SynapseEngine
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)
